@@ -112,7 +112,7 @@ docker build -t myblog .
 ```
 # docker images
 REPOSITORY                   TAG                 IMAGE ID            CREATED             SIZE
-myblog              latest              568f1a418c79        3 hours ago         208MB
+myblog                      latest              568f1a418c79        3 hours ago         208MB
 ```
 
 启动后端容器
@@ -145,7 +145,42 @@ docker pull nginx
 docker run --name=nginx -p 80:80 -d docker.io/nginx
 ```
 
-default.conf
+`docker exec -it nginx bash`进入nginx容器，切换目录`/etc/nginx/nginx.conf`，修改docker nginx配置文件：
+
+```java
+user  nginx;
+worker_processes  1;
+
+error_log  /var/log/nginx/error.log warn;
+pid        /var/run/nginx.pid;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+    
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+    #包含所有conf结尾的文件
+    include /etc/nginx/conf.d/*.conf;
+}
+```
+
+博客前端资源转发配置在default.conf
 
 ```
 server {
@@ -178,13 +213,40 @@ server {
 }
 ```
 
-将配置文件拷贝至容器内
+管理台静态资源转发配置在blog.conf
 
-```
- docker cp default.conf nginx:/etc/nginx/conf.d/default.conf
+```java
+server {
+    listen       8080;
+    server_name  localhost;
+    #访问vue项目
+    location / {
+        root   /usr/share/nginx/html/manage;
+        index  index.html;
+    }
+    #将api转发到后端
+    location /api/ {
+        proxy_pass http://129.204.179.3:8088/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header REMOTE-HOST $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_connect_timeout 60s;
+        proxy_send_timeout 180s;
+        proxy_read_timeout 180s;
+        proxy_buffer_size 1M;
+        proxy_buffers 8 1M;
+        proxy_busy_buffers_size 1M;
+        proxy_temp_file_write_size 1M;
+    }
+    #转发图片请求到后端
+    location /img/ {
+        proxy_pass http://129.204.179.3:8088/img/;
+    }
+}
 ```
 
-前端工程下载好，执行`npm run build`打包生成dist文件夹，改名为html，拷贝到nginx容器
+前端工程下载好，执行`npm run build`打包
 
 ```
 npm install 
@@ -196,10 +258,10 @@ npm install
 npm run build
 ```
 
-将打包生成的`dist`文件夹改名为`html`,拷贝到nginx容器
+将生成dist文件夹拷贝到nginx容器，博客前端资源拷贝到`/usr/share/nginx/html`，管理台前端资源拷贝到`/usr/share/nginx/html/manage`。
 
 ```
-docker cp html nginx:/usr/share/nginx
+docker cp html nginx:/usr/share/nginx/html
 ```
 
 重启nginx容器
@@ -208,4 +270,4 @@ docker cp html nginx:/usr/share/nginx
 docker restart nginx
 ```
 
-打开浏览器，看到博客首页，即docker部署完成。
+打开浏览器，访问`http://129.204.179.3`可以看到博客首页，访问`http://129.204.179.3:8088`可以看到博客管理台，即docker部署完成。
