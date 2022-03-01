@@ -63,10 +63,23 @@ mybatis-generator详细配置可以参考：https://juejin.cn/post/6844903982582
 [开箱即用的整合第三方登录的开源组件](https://justauth.wiki/)
 
 
-# todo
+# TODO
 
 - 评论、点赞消息通知
 - qq/wechat登录
 - 子评论功能
 - ...
 
+
+
+#  贡献代码
+
+开源项目离不开大家的支持，如果您有好的想法，或者修复了BUG，欢迎小伙伴们提交 **Pull Request** 参与开源贡献。
+
+1. **fork** 本项目到自己的代码仓
+2. 把 **fork** 过去的项目也就是你仓库中的项目 **clone** 到你的本地
+3. 新建分支
+4. 修改代码
+5. **commit** 后 **push** 到自己的库
+6. 发起**PR**（ **pull request**） 请求，提交到 **feature** 分支
+7. 等待合并
