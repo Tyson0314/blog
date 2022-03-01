@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dabin.dao.UserMapper">
+
+    <select id="selectByUserIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from user
+        where id in
+        <foreach collection="userIds" separator="," open="(" close=")" item="userId">
+            #{userId}
+        </foreach>
+    </select>
+</mapper>

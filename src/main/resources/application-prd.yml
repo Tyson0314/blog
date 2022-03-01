@@ -1,0 +1,50 @@
+server:
+  port: 8088
+spring:
+  jackson:
+    property-naming-strategy: CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+  redis:
+    open: false  # 是否开启redis缓存  true开启   false关闭
+    database: 0
+    host: 129.204.179.3
+    port: 6379
+    password:
+    timeout: 6000ms  # 连接超时时长（毫秒）
+    jedis:
+      pool:
+        max-active: 1000  # 连接池最大连接数（使用负值表示没有限制）
+        max-wait: -1ms    # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-idle: 10      # 连接池中的最大空闲连接
+        min-idle: 5       # 连接池中的最小空闲连接
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url : jdbc:mysql://129.204.179.3:3306/blog?autoReconnect=true&useUnicode=true&characterEncoding=utf-8&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password:
+#可以用data.name表示
+qiniu:
+  accessKey:
+  secretKey:
+  bucket:
+  url-prefix:
+jwt:
+  secret: 039bdc5203c0ca96f34745ae9c8513b217c4e5cbfaab1a103c7efe85a0892d11
+  expiration: 86400
+  cbcSecret: 070e6a12c046c62cc80266662900cf1b
+user:
+  username: dabin
+  password: 123456
+blog:
+  web:
+    url: http://129.204.179.3:8088
+webSite:
+  url: http://129.204.179.3
+justAuth:
+  clientId:
+    gitee:
+    github:
+  clientSecret:
+    gitee:
+    github:

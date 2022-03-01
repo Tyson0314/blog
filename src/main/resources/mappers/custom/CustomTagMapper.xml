@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dabin.dao.TagMapper">
+
+  <resultMap extends="BaseResultMap" id="BlogTagResultMap" type="com.dabin.vo.BlogTagVo">
+    <id column="blog_id" jdbcType="INTEGER" property="blogId" />
+  </resultMap>
+
+  <select id="queryByName" parameterType="com.dabin.dto.TagAddRequest" resultType="com.dabin.entity.Tag">
+    select
+    <include refid="Base_Column_List"/>
+    <where>
+    <if test="tagType != null">
+      tag_type = #{tagType}
+    </if>
+    <if test="tagName != null">
+      and tag_name= #{tagName}
+    </if>
+    </where>
+  </select>
+  <select id="queryById" parameterType="com.dabin.entity.Tag" resultType="com.dabin.entity.Tag">
+    SELECT
+    <include refid="Base_Column_List"/>
+    <where>
+      <if test="tagType != null">
+        tag_type = #{tagType}
+      </if>
+      <if test="id != null">
+        and id= #{id}
+      </if>
+    </where>
+  </select>
+  <select id="selectTagList" resultType="com.dabin.vo.TagWithCountVO">
+    SELECT COUNT(t.blog_id) as   blogCount, t.tag_id as id, t1.tag_name as tagName
+    FROM blog_tag t
+    LEFT JOIN tag t1 ON t.tag_id = t1.id
+    LEFT JOIN blog t2 ON t.blog_id = t2.id
+    WHERE t2.blog_status = '1'
+    GROUP BY id
+  </select>
+  <select id="selectTagsOfBlog" resultType="com.dabin.entity.Tag">
+    SELECT tag.tag_name as tagName ,tag.id
+    FROM blog_tag
+    LEFT JOIN tag on tag.id = blog_tag.tag_id
+    where blog_id = #{blogId}
+  </select>
+  <select id="selectCategoryList" resultType="com.dabin.vo.TagWithCountVO">
+    SELECT COUNT(t.category_id)  as blogCount, t.category_id as id, t1.tag_name as tagName
+    FROM blog t
+    LEFT JOIN tag t1 ON t.category_id = t1.id
+    WHERE t.blog_status = '1'
+    GROUP BY t.category_id;
+  </select>
+  <update id="updateTag" parameterType="com.dabin.entity.Tag">
+      UPDATE tag
+    <set>
+       <if test="tagName != null">
+      tag_name=#{tagName,jdbcType=VARCHAR},
+    </if>
+      <if test="tagDesc != null">
+        tag_desc=#{tagDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteById" parameterType="int">
+    DELETE
+    FROM tag
+    WHERE id=#{id,jdbcType=INTEGER}
+  </delete>
+
+  <select id="selectTagsByBlogIds" resultMap="BlogTagResultMap">
+    select blog_id, tag.id, tag_name, tag_desc, tag_type,
+    tag_name, tag_desc, tag_type, create_time, update_time
+    from blog_tag
+    LEFT JOIN tag on tag.id = blog_tag.tag_id
+    where blog_tag.blog_id in
+    <foreach collection="blogIdList" item="blogId" open="(" close=")" separator=",">
+      #{blogId}
+    </foreach>
+  </select>
+</mapper>
