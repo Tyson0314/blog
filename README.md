@@ -1,6 +1,20 @@
 # blog
 个人博客，基于SpringBoot + mybatis + MySQL + Redis开发
 
+# 简介
+
+本项目基于[开源项目](https://github.com/liqianggh/blog)二次开发，博客预览地址（首次加载有点慢）：http://dabin-coder.cn
+
+博客管理台地址：http://dabin-coder.cn:8080
+
+博客截图：
+
+![](https://gitee.com/tysondai/img/raw/master/image-20220301223342568.png)
+
+![](https://gitee.com/tysondai/img/raw/master/image-20220301223515502.png)
+
+![](https://gitee.com/tysondai/img/raw/master/image-20220301223551334.png)
+
 # 开发指南
 
 ## 运行
@@ -8,6 +22,8 @@
 1. maven 项目 需要maven环境。
 
 2. 导入sql/blog.sql脚本。
+
+2. 设置redis和MySQL密码。
 
 3. 配置七牛云图床参数。
 
@@ -69,8 +85,6 @@ mybatis-generator详细配置可以参考：https://juejin.cn/post/6844903982582
 - qq/wechat登录
 - 子评论功能
 - ...
-
-
 
 #  贡献代码
 
