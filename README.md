@@ -1,11 +1,14 @@
-# blog
-个人博客，基于SpringBoot + mybatis + MySQL + Redis开发
-
 # 简介
 
-本项目基于[开源项目](https://github.com/liqianggh/blog)二次开发，博客预览地址（首次加载有点慢）：http://dabin-coder.cn
+本项目基于[开源项目](https://github.com/liqianggh/blog)二次开发，后端技术栈为SpringBoot + mybatis + MySQL + Redis开发，前端使用vue，前后端分离。
 
-博客管理台地址：http://dabin-coder.cn:8080
+[博客前端项目地址](https://github.com/Tyson0314/blog-web)
+
+[博客管理台前端项目地址](https://github.com/Tyson0314/blog-web-manage)
+
+[博客预览地址（首次加载有点慢）](http://dabin-coder.cn)
+
+[博客管理台预览地址](http://dabin-coder.cn:8080)
 
 博客截图：
 
