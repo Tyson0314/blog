@@ -42,3 +42,4 @@ myblog.iml
 *.uml linguist-language=Java
 *.cmd linguist-language=Java
 *.sql linguist-language=Java
+*.py

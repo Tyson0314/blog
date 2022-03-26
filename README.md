@@ -12,11 +12,11 @@
 
 博客截图：
 
-![](https://gitee.com/tysondai/img/raw/master/image-20220301223342568.png)
+![](https://raw.githubusercontent.com/Tyson0314/img/master//image-20220301223342568.png)
 
-![](https://gitee.com/tysondai/img/raw/master/image-20220301223515502.png)
+![](https://raw.githubusercontent.com/Tyson0314/img/master//image-20220301223515502.png)
 
-![](https://gitee.com/tysondai/img/raw/master/image-20220301223551334.png)
+![](https://raw.githubusercontent.com/Tyson0314/img/master//image-20220301223551334.png)
 
 # 开发指南
 
@@ -65,7 +65,7 @@
 
 2、运行mybatis-generator插件，即可生成通用mapper文件。
 
-![](https://gitee.com/tysondai/img/raw/master/image-20220301002441621.png)
+![](https://raw.githubusercontent.com/Tyson0314/img/master//image-20220301002441621.png)
 
 mybatis-generator详细配置可以参考：https://juejin.cn/post/6844903982582743048
 
